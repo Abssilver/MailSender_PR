@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
 using System.Windows;
 
@@ -14,15 +13,15 @@ namespace WPFTests
 
         private void OnSendButtonClick(object sender, RoutedEventArgs e)
         {
-            var to = new MailAddress("test@gmail.com", "Test To");
-            var from = new MailAddress("test@yandex.ru", "Test From");
+            var to = new MailAddress(ConnectionData.AddresseeEmail, ConnectionData.AddresseeUsername);
+            var from = new MailAddress(ConnectionData.ClientEmail, ConnectionData.ClientUsername);
 
             var message = new MailMessage(from, to);
 
-            message.Subject = "Заголовок письма от " + DateTime.Now;
-            message.Body = "Текст тестового письма " + DateTime.Now;
+            message.Subject = EmailSubjectTb.Text;
+            message.Body = EmailBodyTb.Text;
 
-            var client = new SmtpClient("smtp.yandex.ru", 587);
+            var client = new SmtpClient(ConnectionData.SmtpServer, ConnectionData.SmtpPort);
 
             client.EnableSsl = true;
 

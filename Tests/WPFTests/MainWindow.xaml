@@ -7,11 +7,15 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="button" Content="Отправить" HorizontalAlignment="Left" Margin="400,235,0,0" VerticalAlignment="Top" Click="OnSendButtonClick"/>
-        <TextBox Name="LoginTb" HorizontalAlignment="Left" Margin="217,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <PasswordBox Name="PasswordPb" HorizontalAlignment="Left" Margin="485,180,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="235,136,0,0" Text="Имя пользователя" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <Label x:Name="label" Content="Пароль" HorizontalAlignment="Left" Margin="520,144,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="button" Content="Отправить" HorizontalAlignment="Left" Margin="128,306,0,0" VerticalAlignment="Top" Click="OnSendButtonClick"/>
+        <TextBox Name="LoginTb" HorizontalAlignment="Left" Margin="108,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <PasswordBox Name="PasswordPb" HorizontalAlignment="Left" Margin="374,127,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="108,86,0,0" Text="Имя пользователя" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Label x:Name="label" Content="Пароль" HorizontalAlignment="Center" Margin="0,76,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label1" Content="Тема письма" HorizontalAlignment="Left" Margin="108,174,0,0" VerticalAlignment="Top" Width="51"/>
+        <TextBox x:Name="EmailSubjectTb" HorizontalAlignment="Left" Margin="200,178,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="label2" Content="Сообщение письма" HorizontalAlignment="Left" Margin="115,229,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="EmailBodyTb" HorizontalAlignment="Left" Margin="260,229,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>
