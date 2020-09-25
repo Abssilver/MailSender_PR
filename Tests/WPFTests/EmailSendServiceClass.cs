@@ -16,7 +16,7 @@ namespace WPFTests
             _message = new MailMessage(client, addressee);
             _message.IsBodyHtml = ConnectionData.IsBodyHtml;
             
-            _smtpClient = new SmtpClient(ConnectionData.SmtpServerYandex, ConnectionData.SmtpPortYandex);
+            _smtpClient = new SmtpClient(ConnectionData.SmtpServer, ConnectionData.SmtpPort);
             _smtpClient.EnableSsl = ConnectionData.EnableSSL;
             _smtpClient.DeliveryMethod = ConnectionData.DeliveryMethod;
             _smtpClient.UseDefaultCredentials = ConnectionData.UseDefaultCredentials;

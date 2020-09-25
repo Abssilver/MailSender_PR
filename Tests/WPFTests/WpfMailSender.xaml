@@ -5,24 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFTests"
         mc:Ignorable="d"
-        Title="WpfMailSender" Height="450" Width="800">
-    <Window.Resources>
-        <!--ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Theme.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary-->
-    </Window.Resources>
+        Title="WpfMailSender" Height="350" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Button x:Name="button" Content="Отправить" HorizontalAlignment="Left" Margin="128,306,0,0" VerticalAlignment="Top" Click="OnSendButtonClick"/>
-        <TextBox Name="LoginTb" HorizontalAlignment="Left" Margin="108,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <PasswordBox Name="PasswordPb" HorizontalAlignment="Left" Margin="374,127,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="108,86,0,0" Text="Имя пользователя" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <Label x:Name="label" Content="Пароль" HorizontalAlignment="Center" Margin="0,76,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label1" Content="Тема письма" HorizontalAlignment="Left" Margin="108,174,0,0" VerticalAlignment="Top" Width="51"/>
-        <TextBox x:Name="EmailSubjectTb" HorizontalAlignment="Left" Margin="200,178,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="label2" Content="Сообщение письма" HorizontalAlignment="Left" Margin="115,229,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="EmailBodyTb" HorizontalAlignment="Left" Margin="260,229,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-
+        <Label x:Name="lblLogin" Content="Имя пользователя" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="140">
+            <Label.Foreground>
+                <SolidColorBrush Color="Gray"/>
+            </Label.Foreground>
+        </Label>
+        <TextBox Name="tbLogin" HorizontalAlignment="Left" Margin="10,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
+        <Label x:Name="lblPassword" Content="Пароль" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Width="140">
+            <Label.Foreground>
+                <SolidColorBrush Color="Gray"/>
+            </Label.Foreground>
+        </Label>
+        <PasswordBox Name="pbPassword" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="140"/>
+        <Label x:Name="lblSender" Content="Адрес-рассыльщик" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Width="140">
+            <Label.Foreground>
+                <SolidColorBrush Color="Gray"/>
+            </Label.Foreground>
+        </Label>
+        <TextBox Name="tbSender" HorizontalAlignment="Left" Margin="10,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
+        <Label x:Name="lblAddressee" Content="Адрес-получатель" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" Width="140">
+            <Label.Foreground>
+                <SolidColorBrush Color="Gray"/>
+            </Label.Foreground>
+        </Label>
+        <TextBox Name="tbAddressee" HorizontalAlignment="Left" Margin="10,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
+        <Label x:Name="lblSubject" Content="Тема письма" HorizontalAlignment="Left" Margin="200,10,0,0" VerticalAlignment="Top" Width="80">
+            <Label.Foreground>
+                <SolidColorBrush Color="Gray"/>
+            </Label.Foreground>
+        </Label>
+        <TextBox x:Name="EmailSubjectTb" HorizontalAlignment="Left" Margin="200,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="249"/>
+        <Label x:Name="lblMessageText" Content="Сообщение письма" HorizontalAlignment="Left" Margin="200,70,0,0" VerticalAlignment="Top">
+            <Label.Foreground>
+                <SolidColorBrush Color="Gray"/>
+            </Label.Foreground>
+        </Label>
+        <TextBox x:Name="EmailBodyTb" HorizontalAlignment="Left" Margin="200,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Height="140"/>
+        <Button x:Name="btnSend" Content="Отправить" HorizontalAlignment="Left" Margin="365,260,0,0" VerticalAlignment="Top" Click="OnSendButtonClick" Height="30" Width="85"/>
     </Grid>
 </Window>

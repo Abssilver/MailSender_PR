@@ -7,20 +7,24 @@ namespace WPFTests
 {
     public partial class WpfMailSender 
     {
-        private EmailSendServiceClass _sendService;
         public WpfMailSender()
         {
             InitializeComponent();
-            _sendService = new EmailSendServiceClass();
+            
         }
 
         private void OnSendButtonClick(object sender, RoutedEventArgs e)
         {
-            _sendService.SetupCredentials(LoginTb.Text, PasswordPb.SecurePassword);
-            _sendService.SetupMessage(EmailSubjectTb.Text, EmailBodyTb.Text);
+            ConnectionData.ClientEmail = tbSender.Text;
+            ConnectionData.AddresseeEmail = tbAddressee.Text;
+
+            EmailSendServiceClass sendService = new EmailSendServiceClass();
+
+            sendService.SetupCredentials(tbLogin.Text, pbPassword.SecurePassword);
+            sendService.SetupMessage(EmailSubjectTb.Text, EmailBodyTb.Text);
             try
             {
-                _sendService.SendMessage();
+                sendService.SendMessage();
             }
             catch (Exception ex)
             {
