@@ -26,7 +26,7 @@ namespace WPFTests
             {
                 sendService.SendMessage();
             }
-            catch (Exception ex)
+            catch (SmtpException ex)
             {
                 ErrorMessageWindow errorWindow = 
                     new ErrorMessageWindow("Невозможно отправить письмо:\n" + ex.ToString());
