@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Net;
 using System.Net.Mail;
-using System.Text;
 
 namespace MailSender.Service
 {
-    class SmtpSender
+    public class SmtpSender
     {
         private string Address { get; }
         private int Port { get; }
@@ -24,7 +21,7 @@ namespace MailSender.Service
         }
         public void SendMessage(string senderAddress, string recipientAddress, string subject, string body)
         {
-            var to = new MailAddress(senderAddress); ;
+            var to = new MailAddress(senderAddress);
             var from = new MailAddress(recipientAddress);
 
 

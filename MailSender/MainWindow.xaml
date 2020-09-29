@@ -6,7 +6,7 @@
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:local="clr-namespace:MailSender"
         xmlns:data="clr-namespace:MailSender.Data"
-        xmlns:m="clr-namespace:MailSender.Models"
+        xmlns:m="clr-namespace:MailSender.Models;assembly=MailSender.lib"
         mc:Ignorable="d"
         Title="MainWindow" MinHeight="400" MaxHeight="1000" Width="800">
     <DockPanel>

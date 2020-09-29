@@ -1,10 +1,10 @@
-﻿using MailSender.lib;
-using MailSender.Models;
+﻿using MailSender.Models;
 using System.Diagnostics;
 using System.Net.Mail;
 using System.Windows;
 using System.Linq;
 using MailSender.Data;
+using MailSender.Service;
 
 namespace MailSender
 {

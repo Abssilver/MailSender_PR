@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MailSender.Models
 {
-    class Server
+    public class Server
     {
         public int Id { get; set; }
         public string Name { get; set; }
