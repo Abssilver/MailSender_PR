@@ -7,8 +7,9 @@
         xmlns:local="clr-namespace:MailSender"
         xmlns:data="clr-namespace:MailSender.Data"
         xmlns:m="clr-namespace:MailSender.Models;assembly=MailSender.lib"
+        DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="400" MaxHeight="1000" Width="800">
+        Title="{Binding Title}" MinHeight="400" MaxHeight="1000" Width="800">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
@@ -40,7 +41,8 @@
                     <ToolBarTray DockPanel.Dock="Top">
                         <ToolBar Header="Сервера" Band="0">
                             <ComboBox Name="ServersList" Margin="52,0,0,0" MinWidth="120" MaxWidth="200" SelectedIndex="0"
-                                      ItemsSource="{x:Static data:TestData.Servers}"
+                                      ItemsSource="{Binding Servers}"
+                                      SelectedItem="{Binding SelectedServer}"
                                       DisplayMemberPath="Address"
                                       ToolTip="Выбрать адрес сервера">
                             </ComboBox>
@@ -57,16 +59,14 @@
                                     </TextBlock>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>-->
-                            <Button fa:Awesome.Content="Solid_PlusCircle" Foreground="Green" ToolTip="Добавить"
-                                    Click="OnAddServerButtonClick"/>
-                            <Button fa:Awesome.Content="Solid_Edit" Foreground="LightCoral" ToolTip="Редактировать"
-                                    Click="OnEditServerButtonClick"/>
-                            <Button fa:Awesome.Content="Solid_Trash" Foreground="Red" ToolTip="Удалить"
-                                    Click="OnDeleteServerButtonClick"/>
+                            <Button fa:Awesome.Content="Solid_PlusCircle" Foreground="Green" ToolTip="Добавить"/>
+                            <Button fa:Awesome.Content="Solid_Edit" Foreground="LightCoral" ToolTip="Редактировать"/>
+                            <Button fa:Awesome.Content="Solid_Trash" Foreground="Red" ToolTip="Удалить"/>
                         </ToolBar>
                         <ToolBar Header="Отправители" Band="1">
                             <ComboBox Name="SendersList" Margin="26,0,0,0" MinWidth="120" MaxWidth="200" SelectedIndex="0"
-                                      ItemsSource="{x:Static data:TestData.Senders}" ToolTip="Выбрать отправителя">
+                                      ItemsSource="{Binding Senders}" ToolTip="Выбрать отправителя"
+                                      SelectedItem="{Binding SelectedSender}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate DataType="m:Sender">
                                         <StackPanel Orientation="Horizontal">
@@ -91,7 +91,8 @@
                         </ToolBar>
                     </ToolBarTray>
                     <GroupBox Header="Список получателей">
-                        <DataGrid Name="RecipientsList" ItemsSource="{x:Static data:TestData.Recipients}"
+                        <DataGrid Name="RecipientsList" ItemsSource="{Binding Recipients}"
+                                  SelectedItem="{Binding SelectedRecipient}"
                                   AutoGenerateColumns="False"
                                   GridLinesVisibility="Vertical"
                                   AlternatingRowBackground="LightGray"
@@ -125,7 +126,7 @@
                                 </StackPanel.Resources>
                                 <UniformGrid Columns="1" Margin="5">
                                     <Button Content="Запланировать"/>
-                                    <Button Content="Отправить" Click="OnSendButtonClick"/>
+                                    <Button Content="Отправить"/>
                                 </UniformGrid>
                             </StackPanel>
                         </StackPanel>
@@ -213,9 +214,10 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <GroupBox Grid.Column="0" Header="Список писем">
-                        <ListBox Name="MessagesList" ItemsSource="{x:Static data:TestData.Messages}" 
+                        <ListBox Name="MessagesList" ItemsSource="{Binding Messages}" 
                                  DisplayMemberPath="Subject"
-                                 SelectedIndex="0">
+                                 SelectedIndex="0"
+                                 SelectedItem="{Binding SelectedMessage}">
                         </ListBox>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Header="Редактор">

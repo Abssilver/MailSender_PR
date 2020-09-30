@@ -1,0 +1,50 @@
+﻿<Window x:Class="WPFTests_MVVM.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFTests_MVVM"
+        xmlns:vm="clr-namespace:WPFTests_MVVM.ViewModels"
+        xmlns:commands="clr-namespace:WPFTests_MVVM.Infrastructure.Commands"
+        mc:Ignorable="d"
+        Title="{Binding Title}" Height="450" Width="800"
+        Topmost="{Binding IsChecked, ElementName=IsWindowTopMost}">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <TextBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="140" Margin="65,25,0,0"
+                 Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
+        <Slider VerticalAlignment="Top" HorizontalAlignment="Left" Width="140" Margin="420, 25,0,0"
+                Minimum="0"
+                Maximum="600"
+                Value="{Binding X, ElementName=Translator}"/>
+        <Slider VerticalAlignment="Top" HorizontalAlignment="Left" Width="140" Margin="240, 25,0,0"
+                Minimum="-180" Maximum="180"
+                Value="{Binding Angle, ElementName=Rotator}"/>
+        <Ellipse Fill="Aqua" VerticalAlignment="Top" HorizontalAlignment="Left"
+                 Width="80" Height="40" Margin="95,85,0,0"
+                 RenderTransformOrigin="0.5, 0.5">
+            <Ellipse.RenderTransform>
+                <TransformGroup>
+                    <TranslateTransform X="0" x:Name="Translator"/>
+                    <RotateTransform Angle="0" x:Name="Rotator"/>
+                </TransformGroup>
+            </Ellipse.RenderTransform>
+        </Ellipse>
+        <TextBlock Text="{Binding CurrentTime, ConverterCulture=ru-RU, StringFormat=HH:mm:ss.ffff}"/>
+        <CheckBox Content="Включить таймер" VerticalAlignment="Top" HorizontalAlignment="Left"
+                  Margin="80, 0" IsChecked="{Binding TimerEnabled}"/>
+        <CheckBox Content="Top Most" VerticalAlignment="Top" HorizontalAlignment="Left"
+                  Margin="220, 0" Name="IsWindowTopMost"/>
+        <Button Content="Close Window" VerticalAlignment="Top" HorizontalAlignment="Left"
+                Margin="20, 60">
+            <Button.Command>
+                <commands:CloseWindowCommand/>
+            </Button.Command>
+        </Button>
+        <Button Content="Show Window" VerticalAlignment="Top" HorizontalAlignment="Left"
+                Margin="120, 60" Command="{Binding ShowDialogueCommand}">
+        </Button>
+    </Grid>
+</Window>
