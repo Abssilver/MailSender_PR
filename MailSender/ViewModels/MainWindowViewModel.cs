@@ -1,12 +1,10 @@
 ﻿using MailSender.Data;
 using MailSender.Infrastructure.Commands;
+using MailSender.Interfaces;
 using MailSender.Models;
 using MailSender.ViewModels.Base;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
-using System.Threading.Tasks.Dataflow;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -14,7 +12,11 @@ namespace MailSender.ViewModels
 {
     class MainWindowViewModel : ViewModel
     {
+        private readonly IMailService _mailService;
+
         private string _title = "Тестовое окно";
+
+        public StatisticsViewModel Statistic { get; } = new StatisticsViewModel();
         public string Title
         {
             get => _title;
@@ -87,9 +89,78 @@ namespace MailSender.ViewModels
 
         #endregion
 
-        #endregion
-        public MainWindowViewModel()
+        #region EditServerCommand
+
+        private ICommand _editServerCommand;
+        public ICommand EditServerCommand => _editServerCommand
+            ??= new LambdaCommand(OnEditServerCommandExecuted, CanEditServerCommandExecute);
+        private bool CanEditServerCommandExecute(object p) => p is Server || SelectedServer!= null;
+
+        private void OnEditServerCommandExecuted(object p)
         {
+            var server = p as Server ?? SelectedServer;
+            if (server is null) return;
+            MessageBox.Show($"Редактирование сервера {server.Address}!", "Управление серверами");
+        }
+
+        #endregion
+
+        #region DeleteServerCommand
+
+        private ICommand _deleteServerCommand;
+        public ICommand DeleteServerCommand => _deleteServerCommand
+            ??= new LambdaCommand(OnDeleteServerCommandExecuted, CanDeleteServerCommandExecute);
+        private bool CanDeleteServerCommandExecute(object p) => p is Server || SelectedServer!= null;
+
+        private void OnDeleteServerCommandExecuted(object p)
+        {
+            var server = p as Server ?? SelectedServer;
+            if (server is null) return;
+
+            Servers.Remove(server);
+            SelectedServer = Servers.FirstOrDefault();
+
+            MessageBox.Show($"Удаление сервера {server.Address}!", "Управление серверами");
+        }
+
+        #endregion
+
+        #region SendMailCommand
+
+        private ICommand _sendMailCommand;
+        public ICommand SendMailCommand => _sendMailCommand
+            ??= new LambdaCommand(OnSendMailCommandExecuted, CanSendMailCommandExecute);
+        private bool CanSendMailCommandExecute(object p)
+        {
+            if (SelectedServer is null) return false;
+            if (SelectedSender is null) return false;
+            if (SelectedRecipient is null) return false;
+            if (SelectedMessage is null) return false;
+            return true;
+        }
+
+        private void OnSendMailCommandExecuted(object p)
+        {
+            var mailSender = _mailService.GetSender(
+                SelectedServer.Address,
+                SelectedServer.Port,
+                SelectedServer.UseSSL,
+                SelectedServer.Login,
+                SelectedServer.Password);
+            mailSender.Send(
+                SelectedSender.Address,
+                SelectedRecipient.Address,
+                SelectedMessage.Subject,
+                SelectedMessage.Body);
+
+            Statistic.MessageSended();
+        }
+
+        #endregion
+        #endregion
+        public MainWindowViewModel(IMailService mailService)
+        {
+            _mailService = mailService;
             Servers = new ObservableCollection<Server>(TestData.Servers);
             Senders = new ObservableCollection<Sender>(TestData.Senders);
             Recipients = new ObservableCollection<Recipient>(TestData.Recipients);

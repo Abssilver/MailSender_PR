@@ -1,9 +1,11 @@
-﻿using MailSender.ViewModels;
+﻿using MailSender.Interfaces;
+using MailSender.Service;
+using MailSender.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 
-namespace MailSender
+namespace MailSender    
 {
     public partial class App
     {
@@ -15,6 +17,13 @@ namespace MailSender
         private static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
         {
             services.AddSingleton<MainWindowViewModel>();
+#if DEBUG
+            services.AddTransient<IMailService, DebugMailService>();
+#else
+            services.AddTransient<IMailService, SmtpMailService>();
+#endif
+
+            //services.AddScoped<>();
         }
     }
 }

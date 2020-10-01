@@ -22,6 +22,8 @@
             </MenuItem>
             <MenuItem Header="Сервис">
                 <MenuItem Header="Параметры"/>
+                <Separator/>
+                <MenuItem Header="Отправка почты" Command="{Binding SendMailCommand}"/>
             </MenuItem>
             <MenuItem Header="Помощь">
                 <MenuItem Header="О программе"/>
@@ -59,9 +61,11 @@
                                     </TextBlock>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>-->
-                            <Button fa:Awesome.Content="Solid_PlusCircle" Foreground="Green" ToolTip="Добавить"/>
-                            <Button fa:Awesome.Content="Solid_Edit" Foreground="LightCoral" ToolTip="Редактировать"/>
-                            <Button fa:Awesome.Content="Solid_Trash" Foreground="Red" ToolTip="Удалить"/>
+                            <Button fa:Awesome.Content="Solid_PlusCircle" Foreground="Green" ToolTip="Добавить" 
+                                    Command="{Binding CreateNewServerCommand}"
+                                    CommandParameter="{Binding SelectedServer}"/>
+                            <Button fa:Awesome.Content="Solid_Edit" Foreground="LightCoral" ToolTip="Редактировать" Command="{Binding EditServerCommand}"/>
+                            <Button fa:Awesome.Content="Solid_Trash" Foreground="Red" ToolTip="Удалить" Command="{Binding DeleteServerCommand}"/>
                         </ToolBar>
                         <ToolBar Header="Отправители" Band="1">
                             <ComboBox Name="SendersList" Margin="26,0,0,0" MinWidth="120" MaxWidth="200" SelectedIndex="0"
@@ -126,7 +130,7 @@
                                 </StackPanel.Resources>
                                 <UniformGrid Columns="1" Margin="5">
                                     <Button Content="Запланировать"/>
-                                    <Button Content="Отправить"/>
+                                    <Button Content="Отправить" Command="{Binding SendMailCommand}"/>
                                 </UniformGrid>
                             </StackPanel>
                         </StackPanel>
@@ -261,7 +265,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0" Grid.Row="0" Text="Число отправленных писем:"/>
-                        <TextBlock Grid.Column="1" Grid.Row="0" Text="5"/>
+                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Statistic.SendMessagesCount}"/>
                         <TextBlock Grid.Column="0" Grid.Row="1" Text="Число отправителей в базе:"/>
                         <TextBlock Grid.Column="1" Grid.Row="1" Text="5"/>
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="Число получателей в базе:"/>
