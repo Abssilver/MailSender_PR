@@ -22,7 +22,7 @@ namespace MailSender
 #else
             services.AddTransient<IMailService, SmtpMailService>();
 #endif
-
+            services.AddSingleton<IEncryptorService, Rfc2898Encryptor>();
             //services.AddScoped<>();
         }
     }

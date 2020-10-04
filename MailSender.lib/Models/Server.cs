@@ -1,13 +1,12 @@
-﻿using System;
+﻿using MailSender.Models.Base;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MailSender.Models
 {
-    public class Server
+    public class Server: NamedEntity
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
         public string Address { get; set; }
         private int _port = 25;
         public int Port

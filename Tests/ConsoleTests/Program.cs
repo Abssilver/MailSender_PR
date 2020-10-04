@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MailSender.Interfaces;
+using MailSender.Service;
+using System;
 using System.Net;
 using System.Net.Mail;
 
@@ -9,6 +11,13 @@ namespace ConsoleTests
     {
         static void Main(string[] args)
         {
+            IEncryptorService cryptor = new Rfc2898Encryptor();
+            var str = "Hello World!";
+            const string password = "MailSender!";
+            var cryptedString = cryptor.Encrypt(str, password);
+
+            var decryptedString = cryptor.Decrypt(cryptedString, password);
+            /*
             var to = new MailAddress("test@gmail.com", "Test To");
             var from = new MailAddress("test@yandex.ru", "Test From");
 
@@ -30,6 +39,7 @@ namespace ConsoleTests
             client.Send(message);
 
             Console.WriteLine("Hello World!");
+            */
         }
     }
 }
