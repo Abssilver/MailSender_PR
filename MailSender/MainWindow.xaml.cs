@@ -15,6 +15,7 @@ namespace MailSender
             InitializeComponent();
         }
         /// <summary>Обработчик события кнопки создания нового сервера</summary>
+        /*
         private void OnAddServerButtonClick(object Sender, RoutedEventArgs E)
         {
             if (!ServerEditDialog.Create(
@@ -112,29 +113,8 @@ namespace MailSender
                 "Отправка почты",
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
-            }
-            
-            /*
-            var sendService = new MailSenderService()
-            {
-                ServerAddress = selectedServer.Address,
-                ServerPort = selectedServer.Port,
-                UseSSL = selectedServer.UseSSL,
-                Login = selectedServer.Login,
-                Password = selectedServer.Password
-            };
-            try
-            {
-                sendService.SendMessage
-                    (selectedSender.Address, selectedRecipient.Address, 
-                    selectedMessage.Subject, selectedMessage.Body);
-            }
-            catch (SmtpException ex)
-            {
-                MessageBox.Show("Ошибка при отправке почты\n" + ex.ToString(), "Ошибка", 
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            */
+            } 
         }
+        */
     }
 }

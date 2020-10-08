@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:MailSender"
         xmlns:data="clr-namespace:MailSender.Data"
         xmlns:m="clr-namespace:MailSender.Models;assembly=MailSender.lib"
+        xmlns:views="clr-namespace:MailSender.Views"
         DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}"
         mc:Ignorable="d"
         Title="{Binding Title}" MinHeight="400" MaxHeight="1000" Width="800">
@@ -94,21 +95,14 @@
                             <Button fa:Awesome.Content="Solid_Trash" Foreground="Red" ToolTip="Удалить"/>
                         </ToolBar>
                     </ToolBarTray>
-                    <GroupBox Header="Список получателей">
-                        <DataGrid Name="RecipientsList" ItemsSource="{Binding Recipients}"
-                                  SelectedItem="{Binding SelectedRecipient}"
-                                  AutoGenerateColumns="False"
-                                  GridLinesVisibility="Vertical"
-                                  AlternatingRowBackground="LightGray"
-                                  VerticalGridLinesBrush="Gray">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" MinWidth="50" Binding="{Binding Id}"/>
-                                <DataGridTextColumn Header="Имя" Width="200" Binding="{Binding Name}"/>
-                                <DataGridTextColumn Header="Адрес" MinWidth="200" Binding="{Binding Address}"/>
-                                <DataGridTextColumn Header="Описание" Width="*" Binding="{Binding Description}"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </GroupBox>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <views:RecipientsView/>
+                        <views:RecipientEditor Grid.Column="1"/>
+                    </Grid>
                 </DockPanel>
             </TabItem>
             <TabItem Header="Планировщик">
