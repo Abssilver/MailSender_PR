@@ -8,6 +8,7 @@ namespace WPFTests_MVVM
     {
         public MainWindow() => InitializeComponent();
 
+        /*
         private void CalculateResultButton_Click(object sender, RoutedEventArgs e)
         {
             new Thread(() =>
@@ -42,5 +43,6 @@ namespace WPFTests_MVVM
             }
             return "Done!";
         }
+        */
     }
 }
