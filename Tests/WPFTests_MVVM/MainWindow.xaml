@@ -11,8 +11,10 @@
         Topmost="{Binding IsChecked, ElementName=IsWindowTopMost}">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Открыть файл"/>
+            <MenuItem Header="Открыть файл" Click="OnOpenFileClick" Name="OpenAction"/>
+            <MenuItem Header="Отменить" Click="OnCancelReadingClick" Name="CancelAction" IsEnabled="false"/>
         </Menu>
+        <ProgressBar DockPanel.Dock="Bottom" Height="20" Maximum="1" Minimum="0" Name="ProgressInfo"/>
         <Grid>
             <TextBlock Name="Result" Text="Результат"
                        VerticalAlignment="Center"
