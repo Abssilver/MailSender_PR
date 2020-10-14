@@ -13,8 +13,4 @@
     <ProjectReference Include="..\..\MailSender.lib\MailSender.lib.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\Entities\" />
-  </ItemGroup>
-
 </Project>
