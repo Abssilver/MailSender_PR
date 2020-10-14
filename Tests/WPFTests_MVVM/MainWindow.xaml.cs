@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-
+using System.Windows.Threading;
 
 namespace WPFTests_MVVM
 {
@@ -14,42 +14,6 @@ namespace WPFTests_MVVM
     {
         public MainWindow() => InitializeComponent();
 
-        /*
-        private void CalculateResultButton_Click(object sender, RoutedEventArgs e)
-        {
-            new Thread(() =>
-            {
-                var result = GetResultHard();
-                //Application.Current.Dispatcher.Invoke(() => ResultText.Text = result);
-                UpdateResultValue(result);
-            }
-            )
-            {
-                IsBackground = true
-            }.Start();
-            
-        }
-        private void UpdateResultValue(string result)
-        {
-            if (Dispatcher.CheckAccess())
-            {
-                ResultText.Text = result;
-            }
-            else
-            {
-                Dispatcher.Invoke(() => UpdateResultValue(result));
-            }
-        }
-
-        private string GetResultHard()
-        {
-            for (int i = 0; i < 500; i++)
-            {
-                Thread.Sleep(10);
-            }
-            return "Done!";
-        }
-        */
         private CancellationTokenSource _readingFileCancellation;
         private async void OnOpenFileClick(object sender, RoutedEventArgs e)
         {
@@ -88,19 +52,15 @@ namespace WPFTests_MVVM
 
             CancelAction.IsEnabled = false;
             OpenAction.IsEnabled = true;
-            /*
-            ProgressInfo.Dispatcher.Invoke(() =>
-            {
-                ProgressInfo.Value = reader.BaseStream.Position / (double)reader.BaseStream.Length;
-            });
-            */
         }
         private static async Task<int> GetWordsCountInFileAsync(
             string fileName, IProgress<double> progress = null, CancellationToken cancel = default)
         {
+            var threadIdOne = Thread.CurrentThread.ManagedThreadId;
             //Thread id = 7
-            //await Task.Yield(); //Время на обработку
+            await Task.Yield().ConfigureAwait(false);
             //Thread id = 12 или 7 или длугой
+            var threadIdTwo = Thread.CurrentThread.ManagedThreadId;
 
             var wordDictionary = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
@@ -114,7 +74,7 @@ namespace WPFTests_MVVM
                     //ConfigureAwait(false); - требование вернуться в произвольный поток из пула потока
                     var words = line.Split(' ');
                     //Thread.Sleep(1);
-                    //await Task.Delay(1);
+                    await Task.Delay(1, cancel).ConfigureAwait(false);
                     foreach (var word in words)
                     {
                         if (wordDictionary.ContainsKey(word))
@@ -129,6 +89,13 @@ namespace WPFTests_MVVM
                     progress?.Report(reader.BaseStream.Position / (double)reader.BaseStream.Length);
                 }
             }
+            var threadIdThree = Thread.CurrentThread.ManagedThreadId;
+
+            await App.Current.Dispatcher;
+
+            var threadIdFour = Thread.CurrentThread.ManagedThreadId;
+
+
             return wordDictionary.Count;
         }
         private void OnCancelReadingClick(object sender, RoutedEventArgs e)
