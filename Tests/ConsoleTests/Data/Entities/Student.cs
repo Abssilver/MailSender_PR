@@ -5,17 +5,17 @@ using System.Text;
 
 namespace ConsoleTests.Data.Entities
 {
-    abstract class Entity
+    public abstract class Entity
     {
         //[Key]
         public int Id { get; set; }
 
     }
-    abstract class NamedEntity : Entity
+    public abstract class NamedEntity : Entity
     {
         public string Name { get; set; }
     }
-    class Student: NamedEntity
+    public class Student: NamedEntity
     {
         [Required, MaxLength(50)]
         public string Surname { get; set; }
@@ -24,12 +24,13 @@ namespace ConsoleTests.Data.Entities
 
         public virtual Group Group { get; set; } //virtual - тут навигационное свойство
 
+        public double AverageMark { get; set; }
     }
-    class Group: NamedEntity
+    public class Group: NamedEntity
     {
         public string Description { get; set; }
 
-        public virtual ICollection<Student> strudents { get; set; } //отложенные запросы к даннымм
+        public virtual ICollection<Student> Students { get; set; } //отложенные запросы к даннымм
     }
 
 }
