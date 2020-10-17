@@ -3,6 +3,7 @@ using MailSender.Infrastructure.Commands;
 using MailSender.Interfaces;
 using MailSender.Models;
 using MailSender.ViewModels.Base;
+using Microsoft.Extensions.Configuration;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -13,7 +14,7 @@ namespace MailSender.ViewModels
     class MainWindowViewModel : ViewModel
     {
         private readonly IMailService _mailService;
-
+        private readonly IStore<Recipient> _recipientStore;
         private string _title = "Тестовое окно";
 
         public StatisticsViewModel Statistic { get; } = new StatisticsViewModel();
@@ -158,14 +159,17 @@ namespace MailSender.ViewModels
 
         #endregion
         #endregion
-        public MainWindowViewModel(IMailService mailService)
+        public MainWindowViewModel(IMailService mailService, IStore<Recipient> recipientStore)
         {
             _mailService = mailService;
+            _recipientStore = recipientStore;
+
             Servers = new ObservableCollection<Server>(TestData.Servers);
             Senders = new ObservableCollection<Sender>(TestData.Senders);
-            Recipients = new ObservableCollection<Recipient>(TestData.Recipients);
+            Recipients = new ObservableCollection<Recipient>(_recipientStore.GetAll());
             Messages = new ObservableCollection<Message>(TestData.Messages);
 
+            //var connection = config.GetConnectionString("Default");
         }
     }
 }
