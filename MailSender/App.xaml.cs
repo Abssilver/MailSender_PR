@@ -21,10 +21,10 @@ namespace MailSender
         private static IHost _hosting;
         public static IHost Hosting => _hosting ??= Host.CreateDefaultBuilder(Environment.GetCommandLineArgs())
             .ConfigureHostConfiguration(cfg => cfg
-            .AddJsonFile("appsettings.json", true, true)
+            .AddJsonFile("appconfig.json", true, true)
             .AddXmlFile("appsettings.xml", true, true))
             .ConfigureAppConfiguration(cfg => cfg
-            .AddJsonFile("appsettings.json", true, true)
+            .AddJsonFile("appconfig.json", true, true)
             .AddXmlFile("appsettings.xml", true, true))
             .ConfigureLogging(log => log
             .AddConsole()
@@ -48,7 +48,12 @@ namespace MailSender
 
             //services.AddSingleton<IStore<Recipient>, RecipientsStoreInMemory>();
             services.AddSingleton<IStore<Recipient>, RecipientsStoreInDB>();
+            services.AddSingleton<IStore<Sender>, SendersStoreInDB>();
+            services.AddSingleton<IStore<Server>, ServersStoreInDB>();
+            services.AddSingleton<IStore<Message>, MessagesStoreInDB>();
+            services.AddSingleton<IStore<SchedulerTask>, SchedulerTasksStoreInDB>();
 
+            services.AddSingleton<IMailSchedulerService, TaskMailSchedulerService>();
             //services.AddScoped<>();
         }
         protected override void OnStartup(StartupEventArgs e)

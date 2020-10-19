@@ -1,52 +1,37 @@
-﻿using MailSender.Interfaces;
+﻿
 using MailSender.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 
 namespace MailSender.Data.Stores.InDB
 {
-    class RecipientsStoreInDB : IStore<Recipient>
+    class RecipientsStoreInDB : StoreInDB<Recipient>
+    {    
+        public RecipientsStoreInDB(MailSenderDB db): base(db)
+        { 
+        }
+    }
+    class SendersStoreInDB : StoreInDB<Sender>
     {
-        private readonly MailSenderDB _db;
-        public RecipientsStoreInDB(MailSenderDB db)
+        public SendersStoreInDB(MailSenderDB db) : base(db)
         {
-            _db = db;
         }
-        public Recipient Add(Recipient entity)
+    }
+    class ServersStoreInDB : StoreInDB<Server>
+    {
+        public ServersStoreInDB(MailSenderDB db) : base(db)
         {
-            _db.Entry(entity).State = EntityState.Added;
-            _db.SaveChanges();
-            return entity;
         }
-
-        public void Delete(int id)
+    }
+    class MessagesStoreInDB : StoreInDB<Message>
+    {
+        public MessagesStoreInDB(MailSenderDB db) : base(db)
         {
-            var entity = GetById(id);
-            if (entity is null)
-            {
-                return;
-            }
-            _db.Entry(entity).State = EntityState.Deleted;
-            _db.SaveChanges();
         }
-
-        public IEnumerable<Recipient> GetAll()
+    }
+    class SchedulerTasksStoreInDB : StoreInDB<SchedulerTask>
+    {
+        public SchedulerTasksStoreInDB(MailSenderDB db) : base(db)
         {
-            return _db.Recipients.ToArray();
-        }
-
-        public Recipient GetById(int id)
-        {
-            return _db.Recipients.FirstOrDefault(recipient => recipient.Id.Equals(id));
-        }
-
-        public void Update(Recipient entity)
-        {
-            _db.Entry(entity).State = EntityState.Modified;
-            _db.SaveChanges();
         }
     }
 }

@@ -17,9 +17,9 @@ namespace ConsoleTests.Data.Entities
     }
     public class Student: NamedEntity
     {
-        [Required, MaxLength(50)]
+        [Required, MaxLength(120)]
         public string Surname { get; set; }
-        [MaxLength(50)]
+        [MaxLength(120)]
         public string Patronymic { get; set; }
 
         public virtual Group Group { get; set; } //virtual - тут навигационное свойство

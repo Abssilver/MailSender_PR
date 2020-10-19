@@ -14,7 +14,12 @@ namespace MailSender.ViewModels
     class MainWindowViewModel : ViewModel
     {
         private readonly IMailService _mailService;
+        private readonly IStore<Sender> _senderStore;
         private readonly IStore<Recipient> _recipientStore;
+        private readonly IStore<Server> _serverStore;
+        private readonly IStore<Message> _messageStore;
+        private readonly IStore<SchedulerTask> _schedulerTaskStore;
+        private readonly IMailSchedulerService _mailSchedulerService;
         private string _title = "Тестовое окно";
 
         public StatisticsViewModel Statistic { get; } = new StatisticsViewModel();
@@ -158,17 +163,42 @@ namespace MailSender.ViewModels
         }
 
         #endregion
+        #region LoadDataCommand
+
+        private ICommand _loadDataCommand;
+
+        public ICommand LoadDataCommand => _loadDataCommand
+            ??= new LambdaCommand(OnLoadDataCommandExecuted, CanLoadDataCommandExecute);
+        private bool CanLoadDataCommandExecute(object p)
+        {
+            return true;
+        }
+        private void OnLoadDataCommandExecuted(object p)
+        {
+            Servers = new ObservableCollection<Server>(_serverStore.GetAll());
+            Senders = new ObservableCollection<Sender>(_senderStore.GetAll());
+            Recipients = new ObservableCollection<Recipient>(_recipientStore.GetAll());
+            Messages = new ObservableCollection<Message>(_messageStore.GetAll());
+        }
         #endregion
-        public MainWindowViewModel(IMailService mailService, IStore<Recipient> recipientStore)
+        #endregion
+
+
+        public MainWindowViewModel(IMailService mailService,
+            IStore<Sender> senderStore,
+            IStore<Recipient> recipientStore,
+            IStore<Server> serverStore,
+            IStore<Message> messageStore,
+            IStore<SchedulerTask> schedulerTaskStore,
+            IMailSchedulerService mailSchedulerService)
         {
             _mailService = mailService;
+            _senderStore = senderStore;
             _recipientStore = recipientStore;
-
-            Servers = new ObservableCollection<Server>(TestData.Servers);
-            Senders = new ObservableCollection<Sender>(TestData.Senders);
-            Recipients = new ObservableCollection<Recipient>(_recipientStore.GetAll());
-            Messages = new ObservableCollection<Message>(TestData.Messages);
-
+            _serverStore = serverStore;
+            _messageStore = messageStore;
+            _schedulerTaskStore = schedulerTaskStore;
+            _mailSchedulerService = mailSchedulerService;
             //var connection = config.GetConnectionString("Default");
         }
     }

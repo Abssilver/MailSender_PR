@@ -17,10 +17,10 @@ namespace MailSender.Data
         {
             _db.Database.Migrate();
 
+            InitializeServers();
             InitializeRecipients();
             InitializeSenders();
             InitializeMessages();
-            InitializeServers();
 
         }
         private void InitializeRecipients()
