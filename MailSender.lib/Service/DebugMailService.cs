@@ -1,4 +1,5 @@
 ﻿using MailSender.Interfaces;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace MailSender.Service
@@ -36,6 +37,17 @@ namespace MailSender.Service
                     ($"Отправка почты через сервер {_address}:{_port} SSL:{_ssl} (Login: {_login} Pass: {_password})");
                 Debug.WriteLine
                     ($"Сообщение от {senderAddress} к {recipientAddress}:\r\n{subject}\r\n{body}");
+            }
+            public void Send(string senderAddress, IEnumerable<string> recipientAddresses, string subject, string body)
+            {
+                foreach (var recipientAddress in recipientAddresses)
+                {
+                    Send(senderAddress, recipientAddress, subject, body);
+                }
+            }
+            public void SendParallel(string senderAddress, IEnumerable<string> recipientAddresses, string subject, string body)
+            {
+                Send(senderAddress, recipientAddresses, subject, body);
             }
         }
     }
