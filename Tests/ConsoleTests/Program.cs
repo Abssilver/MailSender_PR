@@ -2,10 +2,12 @@
 using MailSender.Service;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ConsoleTests
 {
@@ -13,17 +15,11 @@ namespace ConsoleTests
     {
         static void Main(string[] args)
         {
-            //ThreadTests.Start();
-            //CriticalSectionTest.Start();
-            ThreadPoolTests.Start();
+            var task = AsyncAwaitTest.StartAsync();
+            var processMessages = AsyncAwaitTest.ProcessDataTestAsync();
 
-            Console.WriteLine("Главный поток работу закончил");
-            Console.ReadLine();
+            Console.WriteLine("Тестовая задача запущена");
+            Task.WaitAll(task, processMessages);
         }
-
-        /*
-        [DllImport("filename.dll")]
-        private static extern void MethodName(string str);
-        */
     }
 }
