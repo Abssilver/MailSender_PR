@@ -8,6 +8,7 @@
         xmlns:data="clr-namespace:MailSender.Data"
         xmlns:m="clr-namespace:MailSender.Models;assembly=MailSender.lib"
         xmlns:views="clr-namespace:MailSender.Views"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}"
         mc:Ignorable="d"
         Title="{Binding Title}" MinHeight="400" MaxHeight="1000" Width="800">
@@ -115,6 +116,7 @@
                         <StackPanel>
                             <TextBlock Text="Дата задания" TextAlignment="Center"/>
                             <Calendar  SelectedDate="2020-09-28"/>
+                            <xctk:TimePicker/>
                             <StackPanel Margin="5,5">
                                 <StackPanel.Resources>
                                     <Style TargetType="Button">
