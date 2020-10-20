@@ -23,4 +23,11 @@
     <ProjectReference Include="..\..\MailSender.lib\MailSender.lib.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <None Update="TestLib.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
