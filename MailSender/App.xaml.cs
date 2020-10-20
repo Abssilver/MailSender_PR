@@ -47,6 +47,7 @@ namespace MailSender
             services.AddTransient<MailSenderDbInitializer>();
 
             //services.AddSingleton<IStore<Recipient>, RecipientsStoreInMemory>();
+
             services.AddSingleton<IStore<Recipient>, RecipientsStoreInDB>();
             services.AddSingleton<IStore<Sender>, SendersStoreInDB>();
             services.AddSingleton<IStore<Server>, ServersStoreInDB>();
@@ -54,6 +55,7 @@ namespace MailSender
             services.AddSingleton<IStore<SchedulerTask>, SchedulerTasksStoreInDB>();
 
             services.AddSingleton<IMailSchedulerService, TaskMailSchedulerService>();
+
             //services.AddScoped<>();
         }
         protected override void OnStartup(StartupEventArgs e)

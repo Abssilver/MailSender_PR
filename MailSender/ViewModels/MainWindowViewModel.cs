@@ -192,12 +192,13 @@ namespace MailSender.ViewModels
             IStore<SchedulerTask> schedulerTaskStore,
             IMailSchedulerService mailSchedulerService)
         {
-            _mailService = mailService;
-            _senderStore = senderStore;
             _recipientStore = recipientStore;
-            _serverStore = serverStore;
+            _senderStore = senderStore;
             _messageStore = messageStore;
+            _serverStore = serverStore;
             _schedulerTaskStore = schedulerTaskStore;
+
+            _mailService = mailService;
             _mailSchedulerService = mailSchedulerService;
             //var connection = config.GetConnectionString("Default");
         }
