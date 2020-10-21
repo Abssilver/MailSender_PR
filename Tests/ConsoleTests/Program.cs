@@ -14,12 +14,15 @@ using System.Net;
 using System.Net.Mail;
 using System.Reflection;
 using System.Linq.Expressions;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace ConsoleTests
 {
     class Program
     {
-        static void Main(string[] args)
+        [Description("MainProgram")]
+        static void Main([Required]string[] args)
         {
             Assembly assembly = Assembly.GetEntryAssembly();
 
@@ -95,6 +98,12 @@ namespace ConsoleTests
 
             compiledExpression("first");
             secondExample("second");
+
+            var programType = typeof(Program);
+            var description = programType.GetCustomAttribute<DescriptionAttribute>()?.Description;
+            var programMain = programType.GetMethod("Main", BindingFlags.NonPublic | BindingFlags.Static);
+            var programMainArgs = programMain.GetParameters().FirstOrDefault();
+            var isRequired = programMainArgs.GetCustomAttribute<RequiredAttribute>() != null;
             Console.ReadLine();
         }
         private static Type GetObjectType(object obj)
