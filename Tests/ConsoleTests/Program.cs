@@ -13,9 +13,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace ConsoleTests
 {
@@ -53,6 +51,50 @@ namespace ConsoleTests
             object printer = Activator.CreateInstance(printerType, ">>>");
 
             var printerConstructor = printerType.GetConstructor(new[] { typeof(string) });
+
+            var printer2 = printerConstructor.Invoke(new object[] { "<<<" } );
+
+            var printMethodInfo = printerType.GetMethod("Print");
+
+            printMethodInfo.Invoke(printer, new object[] { "ActivatorPrinter" });
+
+            var prefixFieldInfo = printerType.GetField("_prefix", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            object prefixValueObject = prefixFieldInfo.GetValue(printer);
+
+            prefixFieldInfo.SetValue(printer, "new");
+
+            /*
+            var appDomain = AppDomain.CurrentDomain;
+            var testDomain = AppDomain.CreateDomain("TestDomain");
+            testDomain.ExecuteAssemblyByName(...);
+            AppDomain.Unload(testDomain);
+            */
+            /*
+            var adminProcessInfo = new ProcessStartInfo(Assembly.GetEntryAssembly().Location, "/RegistryWrite")
+            {
+            };
+            Process process = Process.Start(adminProcessInfo);
+            */
+            dynamic dynamicPrinter = printer;
+            dynamicPrinter.Print("DynamicPrinter");
+            //делегат
+            Action<string> printLambda = str => Console.WriteLine(str);
+            //дерево выражений
+            Expression <Action<string>> printExpression = str => Console.WriteLine(str);
+            Action<string> compiledExpression = printExpression.Compile();
+
+            var strParam = Expression.Parameter(typeof(string), "str");
+            var invokeNode = Expression.Call(
+                null,
+                typeof(Console).GetMethod("WriteLine", new[] { typeof(string) }),
+                strParam);
+
+            var resultExpression = Expression.Lambda<Action<string>>(invokeNode, strParam);
+            Action<string> secondExample = resultExpression.Compile();
+
+            compiledExpression("first");
+            secondExample("second");
             Console.ReadLine();
         }
         private static Type GetObjectType(object obj)
